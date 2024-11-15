@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "e-student",
+    "slug": "e-student",
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "estudent",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.econneq.school",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b476858a-c431-4c2c-9f84-59d4a9481630"
+      }
+    }
+  }
+}
