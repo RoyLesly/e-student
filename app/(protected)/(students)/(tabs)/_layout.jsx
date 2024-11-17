@@ -1,25 +1,22 @@
-import { StatusBar } from "expo-status-bar";
 import { Redirect, Tabs } from "expo-router";
 import { Image, Text, View } from "react-native";
-
 import { icons } from "../../../../constants";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useAuth } from "@/context/authContext";
 
-const TabIcon = ({ icon, color, name, focused, theme }) => {
-
+const TabIcon = ({ icon, color, name, focused }) => {
   return (
-    <View className="flex h-full items-center justify-center w-full">
+    <View className="flex gap-2 items-center justify-center">
       <Image
         source={icon}
         resizeMode="contain"
         tintColor={color}
-        className="h-[20px] w-[20px]"
+        className="h-6 w-6"
       />
       <Text
         className={`${focused ? "font-semibold text-[17px] text-teal-700" : "text-slate-400 font-semibold text-[14px]"} italic`}
       >
-        {/*{name}*/}
+        {name}
       </Text>
     </View>
   );
@@ -39,13 +36,15 @@ const TabLayout = () => {
       screenOptions={{
         tabBarActiveTintColor: "#179892",
         tabBarInactiveTintColor: "#003330",
-        tabBarShowLabel: true,
+        tabBarShowLabel: false,
         tabBarStyle: {
           fontSize: hp(4),
-          backgroundColor: theme?.backgroundColor,
+          backgroundColor: "#fff",
+          borderTopWidth: hp(0.1),
+          borderTopColor: "#fff",
           margin: hp(2),
-          height: hp(10),
-          borderRadius: hp(2.6),
+          height: hp(8),
+          borderRadius: hp(3),
           elevation: 5,
           shadowColor: '#52006A',
         },
@@ -75,7 +74,7 @@ const TabLayout = () => {
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TabIcon
-              icon={icons.upload}
+              icon={icons.play}
               color={color}
               name="My Courses"
               focused={focused}
@@ -99,6 +98,7 @@ const TabLayout = () => {
           ),
         }}
       />
+
 
     </Tabs>
 

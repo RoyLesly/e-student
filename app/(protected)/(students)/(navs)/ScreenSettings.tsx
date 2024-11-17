@@ -7,6 +7,7 @@ import darkTheme from '@/context/helper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   StyleSheet, SafeAreaView, ScrollView, View,
   Text, TouchableOpacity, Switch, Image,
@@ -16,6 +17,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 
 
 const ScreenSettings = () => {
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const { user, theme, setTheme, profile } = useAuth();
   const [count, setCount] = useState<number>(0)
@@ -24,14 +26,18 @@ const ScreenSettings = () => {
   const [form, setForm] = useState({
     account_status: false,
     darkMode: "default",
-    pushNotifications: false,
+    language: "en",
   });
   useEffect(() => {
     if (count == 0) {
       const call = async () => {
         const themeMode = await AsyncStorage.getItem("themeMode")
+        const lan = await AsyncStorage.getItem("language")
         if (themeMode && form.darkMode !== themeMode) {
           setForm({ ...form, darkMode: themeMode })
+        }
+        if (lan && lan !== "en") {
+          setForm({ ...form, language: "fr" })
         }
         setCount(count + 1);
       }
@@ -50,6 +56,18 @@ const ScreenSettings = () => {
       setTheme(defaultTheme);
       setForm({ ...form, darkMode: "defaultMode" });
       await AsyncStorage.setItem("themeMode", "defaultMode");
+    }
+  }
+  const changeLanguage = async () => {
+    if (form.language === "en") {
+      await AsyncStorage.setItem("language", "fr");
+      i18n.changeLanguage("fr");
+      setForm({ ...form, language: "fr" });
+    }
+    if (form.language === "fr") {
+      await AsyncStorage.setItem("language", "en");
+      i18n.changeLanguage("en");
+      setForm({ ...form, language: "en" });
     }
   }
 
@@ -76,7 +94,7 @@ const ScreenSettings = () => {
             </View>
 
             <Text numberOfLines={1} style={[styles.headerTitle, { color: theme.pageHeader.textColor }]}>
-              Settings
+              {t("settings")}
             </Text>
 
             <View style={[styles.headerAction, { alignItems: 'flex-end' }]}>
@@ -95,7 +113,7 @@ const ScreenSettings = () => {
 
           <ScrollView contentContainerStyle={styles.content}>
             <View style={[styles.section, { paddingTop: 4 }]}>
-              <Text style={styles.sectionTitle}>Account</Text>
+              <Text style={styles.sectionTitle}>{t("account")}</Text>
 
               <View style={styles.sectionBody}>
                 <TouchableOpacity
@@ -126,13 +144,13 @@ const ScreenSettings = () => {
 
 
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Status</Text>
+              <Text style={styles.sectionTitle}>{t("status")}</Text>
 
               <View style={styles.rowSpacer} />
-              
-              <View style={[styles.rowWrapper, {borderRadius: 12}]}>
+
+              <View style={[styles.rowWrapper, { borderRadius: 12 }]}>
                 <View style={styles.row}>
-                  <Text style={styles.rowLabel}>Account Status</Text>
+                  <Text style={styles.rowLabel}>{t("account-status")}</Text>
 
                   <View style={styles.rowSpacer} />
 
@@ -149,7 +167,7 @@ const ScreenSettings = () => {
             </View>
 
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Preferences</Text>
+              <Text style={styles.sectionTitle}>{t("preferences")}</Text>
 
               <View style={styles.sectionBody}>
 
@@ -161,34 +179,32 @@ const ScreenSettings = () => {
                       // handle onPress
                     }}
                     style={styles.row}>
-                    <Text style={styles.rowLabel}>Language</Text>
-
+                    <Text style={styles.rowLabel}>{t("language")}</Text>
                     <View style={styles.rowSpacer} />
 
-                    <Text style={styles.rowValue}>English</Text>
 
-                    <FeatherIcon
-                      color="#bcbcbc"
-                      name="chevron-right"
-                      size={19} />
+                    <Text style={styles.rowLabel}>{form.language === "en" ? "English" : "French"}</Text>
+                    <Switch onValueChange={() => { changeLanguage(); }}
+                      style={{ transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }] }}
+                      value={form.language === "en"} 
+                    />
                   </TouchableOpacity>
                 </View>
 
                 <View style={styles.rowWrapper}>
                   <View style={styles.row}>
-                    <Text style={styles.rowLabel}>Dark Mode</Text>
+                    <Text style={styles.rowLabel}>{t("dark-mode")}</Text>
 
                     <View style={styles.rowSpacer} />
 
-                    <Switch
-                      onValueChange={() => { changeThemeMode(); }
-                      }
+                    <Switch onValueChange={() => { changeThemeMode(); }}
                       style={{ transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }] }}
-                      value={form.darkMode == "darkMode"} />
+                      value={form.darkMode == "darkMode"} 
+                    />
                   </View>
                 </View>
 
-                <View style={[styles.rowWrapper, styles.rowLast]}>
+                {/* <View style={[styles.rowWrapper, styles.rowLast]}>
                   <View style={styles.row}>
                     <Text style={styles.rowLabel}>Push Notifications</Text>
 
@@ -201,12 +217,12 @@ const ScreenSettings = () => {
                       style={{ transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }] }}
                       value={form.pushNotifications} />
                   </View>
-                </View>
+                </View> */}
               </View>
             </View>
 
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Resources</Text>
+              <Text style={styles.sectionTitle}>{t("resources")}</Text>
 
               <View style={styles.sectionBody}>
                 <View style={[styles.rowWrapper, styles.rowFirst]}>
@@ -215,7 +231,7 @@ const ScreenSettings = () => {
                       // handle onPress
                     }}
                     style={styles.row}>
-                    <Text style={styles.rowLabel}>Contact Us</Text>
+                    <Text style={styles.rowLabel}>{t("contact-us")}</Text>
 
                     <View style={styles.rowSpacer} />
 
@@ -234,7 +250,7 @@ const ScreenSettings = () => {
                       // handle onPress
                     }}
                     style={styles.row}>
-                    <Text style={styles.rowLabel}>Rate in App Store</Text>
+                    <Text style={styles.rowLabel}>{t("rate-in-app-store")}</Text>
 
                     <View style={styles.rowSpacer} />
 
@@ -251,7 +267,7 @@ const ScreenSettings = () => {
                       // handle onPress
                     }}
                     style={styles.row}>
-                    <Text style={styles.rowLabel}>Terms and Privacy</Text>
+                    <Text style={styles.rowLabel}>{t("terms-and-privacy")}</Text>
 
                     <View style={styles.rowSpacer} />
 

@@ -43,6 +43,13 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
             const dom = await AsyncStorage.getItem("domain")
             if (dom) { setDomain(dom) }
         }
+
+        const checkLanguage = async () => {
+            const lan = await AsyncStorage.getItem("language")
+            if (lan) {  }
+            else { AsyncStorage.setItem("language", "en")}
+            console.log(lan, 51)
+        }
         const checkTheme = async () => {
             const themeMode = await AsyncStorage.getItem("themeMode")
             if (themeMode) {
@@ -54,6 +61,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         }
         checkDomain();
         checkTheme();
+        checkLanguage();
 
         setTimeout(() => {
             setIsAuthenticated(false);

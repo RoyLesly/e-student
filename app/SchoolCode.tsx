@@ -8,9 +8,11 @@ import { SchoolsList } from '@/utils/constant';
 import { ConfigData } from '@/utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '@/context/authContext';
+import { useTranslation } from 'react-i18next';
 
 const SchoolCode = () => {
 
+    const { t } = useTranslation();
     const { setDomain, theme } = useAuth();
     const router = useRouter();
     const [ loading, setLoading ] = useState<boolean>(false)
@@ -30,7 +32,7 @@ const SchoolCode = () => {
             setTimeout(async () => {
                 await AsyncStorage.setItem("domain", cd.toLowerCase())
                 setDomain(cd.toLowerCase())
-                Alert.alert("School Code", "Code Validation Successful")
+                Alert.alert(t("school-code"), `${t("code-validation-successful")}`)
                 setLoading(false)
                 router.push("/Login")
                 return;
@@ -52,7 +54,7 @@ const SchoolCode = () => {
 
                     <View className='gap-10 w-full'>
 
-                        <Text style={{ fontSize: hp(4), color: theme.primary }} className='font-bold text-center text-neutral-800 tracking-wider'>School Code</Text>
+                        <Text style={{ fontSize: hp(4), color: theme.primary }} className='font-bold text-center text-neutral-800 tracking-wider'>{t("school-code")}</Text>
 
                         <View className='gap-6'>
 
@@ -62,7 +64,7 @@ const SchoolCode = () => {
                                     onChangeText={value => codeRef.current = value}
                                     style={{ fontSize: hp(2) }}
                                     className='flex-1 font-semibold text-neutral-700'
-                                    placeholder='Code'
+                                    placeholder={t("code")}
                                     placeholderTextColor={'gray'}
                                 />
                             </View>
@@ -77,13 +79,13 @@ const SchoolCode = () => {
                                     onPress={() => handleSubmit()}
                                     style={{ height: hp(6.5), marginVertical: hp(3) }} className='bg-indigo-500 items-center justify-center rounded-xl'
                                 >
-                                    <Text style={{ fontSize: hp(2.7)  }} className='font-bold text-white tracking-wider'>Check</Text>
+                                    <Text style={{ fontSize: hp(2.7)  }} className='font-bold text-white tracking-wider'>{t("check")}</Text>
                                 </TouchableOpacity>
                                 }
 
                                 <View className='flex-row justify-between mt-2'>
                                     <Pressable onPress={() => router.push("/Login")}>
-                                        <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-bold text-indigo-500'>Back To Login</Text>
+                                        <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-bold text-indigo-500'>{t("back-to-login")}</Text>
                                     </Pressable>
                                 </View>
 

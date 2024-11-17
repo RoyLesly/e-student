@@ -10,9 +10,11 @@ import { AuthUserProps, useAuth } from '@/context/authContext';
 import { protocol } from '@/utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import isTokenExpired from '@/utils/actions';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
 
+    const { t } = useTranslation();
     const { theme, domain, setIsAuthenticated, setUser } = useAuth()
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false)
@@ -23,12 +25,12 @@ const Login = () => {
     const handleSubmit = async () => {
         setLoading(true)
         if (!usernameRef.current || !passwordRef.current) {
-            Alert.alert("Sign In", " Please fill all the fields");
+            Alert.alert(t("sign-in"), t("please-fill-all-the-fields"));
             setLoading(false)
             return;
         }
         if (passwordRef.current.length < 4) {
-            Alert.alert("Sign In", "Password Short (minimum 4)");
+            Alert.alert(t("sign-in"), t("password-short"));
             setLoading(false)
             return;
         }
@@ -90,7 +92,7 @@ const Login = () => {
 
                     <View className='gap-10 w-full'>
 
-                        <Text style={{ fontSize: hp(5), color: theme.textColor }} className='font-bold text-center text-neutral-800 tracking-wider'>Login</Text>
+                        <Text style={{ fontSize: hp(5), color: theme.textColor }} className='font-bold text-center text-neutral-800 tracking-wider'>{t("login")}</Text>
 
                         <View className='gap-4'>
 
@@ -100,7 +102,7 @@ const Login = () => {
                                     onChangeText={value => usernameRef.current = value}
                                     style={{ fontSize: hp(2) }}
                                     className='flex-1 font-semibold text-neutral-700'
-                                    placeholder='Matricle / Username'
+                                    placeholder={t("matricle-or-username")}
                                     placeholderTextColor={'gray'}
                                 />
                             </View>
@@ -112,7 +114,7 @@ const Login = () => {
                                         onChangeText={value => passwordRef.current = value}
                                         style={{ fontSize: hp(2) }}
                                         className='flex-1 font-semibold text-neutral-700'
-                                        placeholder='Password'
+                                        placeholder={t("password")}
                                         secureTextEntry
                                         placeholderTextColor={'gray'}
                                     />
@@ -120,10 +122,10 @@ const Login = () => {
 
                                 <View className='flex-row items-center justify-between mt-2'>
                                 <Pressable onPress={() => router.push("/SchoolCode")}>
-                                    <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-semibold text-neutral-500 text-right'>Reset Code</Text>
+                                    <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-semibold text-neutral-500 text-right'>{t("reset-code")}</Text>
                                 </Pressable>
                                 <Pressable onPress={() => router.push("/ForgotPassword")}>
-                                    <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-semibold text-neutral-500 text-right'>Forgot Password?</Text>
+                                    <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-semibold text-neutral-500 text-right'>{t("forgot-password")}</Text>
                                 </Pressable>
                                 </View>
 
@@ -137,15 +139,15 @@ const Login = () => {
                                             onPress={() => handleSubmit()}
                                             style={{ height: hp(6.5), marginVertical: hp(3) }} className='bg-indigo-500 items-center justify-center rounded-xl'
                                         >
-                                            <Text style={{ fontSize: hp(2.7) }} className='font-bold text-white tracking-wider'>Login</Text>
+                                            <Text style={{ fontSize: hp(2.7) }} className='font-bold text-white tracking-wider'>{t("login")}</Text>
                                         </TouchableOpacity>
                                     }
                                 </>
 
                                 <View className='flex-row items-center justify-between mt-2'>
-                                    <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-semibold text-neutral-500'>Help ?</Text>
+                                    <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-semibold text-neutral-500'>{t("help")} ?</Text>
                                     <Pressable onPress={() => router.push("/CheckUser")}>
-                                        <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-bold text-indigo-500'>Check User</Text>
+                                        <Text style={{ fontSize: hp(1.8), color: theme.textColor }} className='font-bold text-indigo-500'>{t("check-user")}</Text>
                                     </Pressable>
                                 </View>
 

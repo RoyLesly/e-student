@@ -7,30 +7,33 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import { icons } from '../../../../constants'
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/context/authContext';
+import { useTranslation } from 'react-i18next';
 
 interface TablistProps { id: number, name: string, title: string, link: string, icon: any }
 
-const TabsListMenu: TablistProps[] = [
-  { id: 1, name: "ca", title: "CA", link: "ScreenCa", icon: icons.ca },
-  { id: 2, name: "ca", title: "Exam", link: "ScreenExam", icon: icons.exam },
-  { id: 3, name: "ca", title: "Resit", link: "ScreenResit", icon: icons.picture },
-  { id: 4, name: "ca", title: "Result", link: "ScreenResult", icon: icons.result },
-  { id: 5, name: "ca", title: "Fees", link: "ScreenFees", icon: icons.calendar2 },
-  { id: 6, name: "ca", title: "Transcript", link: "ScreenTranscript", icon: icons.calendar },
-  { id: 7, name: "ca", title: "Notice", link: "ScreenAnnouncement", icon: icons.calendar2 },
-  { id: 8, name: "ca", title: "Time", link: "ScreenTimeTable", icon: icons.calendar },
-  { id: 9, name: "ca", title: "Settings", link: "ScreenSettings", icon: icons.settings },
-]
+
 
 
 const TabsMenu = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { user, profile, theme } = useAuth();
+
+  const TabsListMenu: TablistProps[] = [
+    { id: 1, name: "ca", title: `${t("ca")}`, link: "ScreenCa", icon: icons.ca },
+    { id: 2, name: "exam", title: `${t("exam")}`, link: "ScreenExam", icon: icons.exam },
+    { id: 3, name: "resit", title: `${t("resit")}`, link: "ScreenResit", icon: icons.picture },
+    { id: 4, name: "result", title: `${t("result")}`, link: "ScreenResult", icon: icons.result },
+    { id: 5, name: "fees", title: `${t("fees")}`, link: "ScreenFees", icon: icons.calendar2 },
+    { id: 6, name: "transcript", title: `${t("transcript")}`, link: "ScreenTranscript", icon: icons.calendar },
+    { id: 7, name: "notice", title: `${t("notice")}`, link: "ScreenAnnouncement", icon: icons.calendar2 },
+    { id: 8, name: "time", title: `${t("time")}`, link: "ScreenTimeTable", icon: icons.calendar },
+    { id: 9, name: "settings", title: `${t("settings")}`, link: "ScreenSettings", icon: icons.settings },
+  ]
 
   const handlePress = (link: string | any) => {
     router.push(link)
   }
-
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme?.backgroundColor }}>
@@ -49,7 +52,7 @@ const TabsMenu = () => {
 
         <View className='flex items-center justify-center w-[80%]'>
           <Text style={{ fontSize: hp(2.8), }} className='flex font-semibold items-center justify-center text-center'>
-            {user.username}
+            {profile.full_name}
           </Text>
           <Text style={{ fontSize: hp(2.5), }} className='flex font-medium italic items-center justify-center text-center tracking-widest'>
             {profile.specialty}
@@ -86,25 +89,7 @@ const TabsMenu = () => {
                 </TouchableOpacity>
               ))
             }
-
-
-
           </View>
-
-
-
-          {/* 
-
-          <View style={{ marginTop: 8 }}>
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}>
-              <View style={styles.btnSecondary}>
-                <Text style={styles.btnSecondaryText}>Cancel</Text>
-              </View>
-            </TouchableOpacity>
-          </View> */}
 
         </View>
       </View>

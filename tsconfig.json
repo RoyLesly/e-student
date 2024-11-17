@@ -9,7 +9,8 @@
         "./context",
         "./components",
         "./utils",
-        "./assets"
+        "./assets",
+        "./locales",
       ]
     }
   },

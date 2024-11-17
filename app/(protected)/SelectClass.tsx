@@ -11,10 +11,12 @@ import { jwtDecode } from 'jwt-decode'
 import { StyleSheet } from 'react-native'
 import { GetSchoolFeesInter, SessionInter } from '@/utils/inter'
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { useTranslation } from 'react-i18next';
 
 
 const SelectClass = () => {
   const router = useRouter();
+  const { t } = useTranslation();
   const { user, domain, setProfile, theme, isAuthenticated } = useAuth()
   const [loading, setLoading] = useState<boolean>(true)
   const [apiFees, setApiFees] = useState<GetSchoolFeesInter[]>()
@@ -71,6 +73,7 @@ const SelectClass = () => {
     }
   }
 
+
   return (
     <View style={{ backgroundColor: theme?.card.backgroundColor }} className='flex-1'>
 
@@ -79,7 +82,7 @@ const SelectClass = () => {
           className='flex-row font-bold gap-4 items-center justify-center tracking-widest'
         >
           <View style={[styles.elevation, { backgroundColor: theme?.card.backgroundColor }]} className='border px-10 py-2 rounded-lg'>
-            <Text style={{ fontSize: hp(3.3), color: theme?.card.textColor }} className='font-bold'>Select Class</Text>
+            <Text style={{ fontSize: hp(3.3), color: theme?.card.textColor }} className='font-bold'>{t('Select-Class')}</Text>
           </View>
         </View>
 
@@ -105,10 +108,10 @@ const SelectClass = () => {
                   </View>
                   <View style={{ justifyContent: "space-between" }} className='flex flex-row gap-10 justify-between'>
                     <Text style={{ fontSize: hp(2.3), color: theme?.card.textColor }} className='font-semibold italic tracking-wider'>
-                      Year: {data.userprofile__specialty__academic_year}
+                      {t("year")}: {data.userprofile__specialty__academic_year}
                     </Text>
                     <Text style={{ fontSize: hp(2.3), color: theme?.card.textColor }} className='font-semibold italic tracking-wider'>
-                      Level: {data.userprofile__specialty__level__level}
+                      {t("level")}: {data.userprofile__specialty__level__level}
                     </Text>
                   </View>
                  

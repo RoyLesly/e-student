@@ -102,7 +102,7 @@ const ScreenTimeTable = () => {
                                     <Text style={{ textAlign: "center", fontSize: hp(2.7), fontWeight: 700, paddingVertical: hp(1) }}>{getStartEndOfWeek(week.year_week, new Date().getFullYear())[0].slice(0, 11)} - {getStartEndOfWeek(week.year_week, new Date().getFullYear())[1].slice(0, 11)}</Text>
                                     {DayList.map((day: string) => (
                                         <>
-                                            {slots.filter((s: GetTimeSlotInter) => (s.timetableday__timetableweek__id == week.id && s.timetableday__day == day)).length ? <Text style={{ textAlign: "left", fontSize: hp(2.3), fontWeight: 500, paddingVertical: hp(0.7), paddingHorizontal: hp(2) }} className='italic'>{day}</Text> : null}
+                                            {slots.filter((s: GetTimeSlotInter) => (s.timetableday__timetableweek__id == week.id && s.timetableday__day == day)).length ? <Text style={{ textAlign: "left", fontSize: hp(2.3), fontWeight: 500, paddingVertical: hp(0.7), paddingHorizontal: hp(2) }} className='italic'  key={day}>{day}</Text> : null}
                                             {slots && slots.filter((s: GetTimeSlotInter) => (s.timetableday__timetableweek__id == week.id && s.timetableday__day == day)).map((slot: GetTimeSlotInter) => (
                                                 <View style={{ marginBottom: hp(0.5), paddingHorizontal: hp(1), paddingVertical: hp(0.2), elevation: hp(3) }} key={slot.id} className='flex flex-row'>
                                                     <Text style={{ fontSize: hp(2) }}>{slot.start.slice(11, 16)}</Text>
