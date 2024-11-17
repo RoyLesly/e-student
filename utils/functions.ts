@@ -3,7 +3,8 @@ import Axios, { AxiosResponse } from "axios";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
-
+import { SchemaPlatformChargesCreate } from './schema';
+// import { collectMoney } from './payment';
 
 
 export interface DataProps {
@@ -101,6 +102,17 @@ export const axiosRequest = async <T>({
     return null
 }
 
+export const makePayment = async (data: { telephone: string, amount: number, service: string }) => {
+    const result = await SchemaPlatformChargesCreate.safeParse(data);
+    if (result.success){
+        // var pay: { operation: boolean, transaction: boolean } | any = await collectMoney({ amount: result.data.amount, service: result.data.service, payer: result.data.telephone })
+        // return { success: true, pay: pay }
+    }
+    if (result.error){
+        return { error: true, data: result.error.format() }
+    }
+}
+
 
 export const getData = async (url: string, searchParams: any, page?: string | null) => {
 
@@ -193,4 +205,13 @@ export const gradeCheck = (mark: number, limit: number) => {
 }
 
 
-
+export const getStartEndOfWeek = (weekNo: any, year: any, option?: string) => {
+    var a = (1 + (weekNo.slice(2, 4) - 1) * 7);
+    var start = new Date(year, 0, a + 1)
+    var end = new Date(start.getTime() + 6 * 24 * 60 * 60 * 1000)
+    if (option && option == "join") {
+        return start.toUTCString().slice(0, 16) + " - " + end.toUTCString().slice(0, 16);
+    } else {
+        return [start.toUTCString().slice(0, 16), end.toUTCString().slice(0, 16)];
+    }
+}

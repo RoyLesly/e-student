@@ -9,3 +9,9 @@ export const SchemaLogin = z.object({
 export const SchemaRefresh = z.object({
     refresh: z.string().trim().min(1, { message: "Must Contain 1 Characters Minimum"}),
 })
+
+export const SchemaPlatformChargesCreate = z.object({
+    telephone: z.coerce.number().min(10, { message: "Minimum 10"}),
+    amount: z.coerce.number().min(5, { message: "Minimum 5"}),
+    service: z.string().trim().min(3, { message: "Must Select Service"}),
+});

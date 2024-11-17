@@ -15,7 +15,7 @@ const HeaderPage = ({ title, apiUserprofile, subTabs }: { title: string, apiUser
   return (
     <View style={{
       backgroundColor: theme.pageHeader.backgroundColor,
-      paddingTop: hp(4), paddingBottom: hp(3),
+      paddingTop: hp(3), paddingBottom: hp(3),
       paddingHorizontal: hp(2), borderBottomLeftRadius: hp(5),
       borderBottomRightRadius: hp(4.5),
       elevation: 10,
@@ -39,7 +39,7 @@ const HeaderPage = ({ title, apiUserprofile, subTabs }: { title: string, apiUser
 
         <View className='flex items-center justify-center w-[60%]'>
           <Text
-            style={{ color: theme.pageHeader.textColor, fontSize: hp(2.7) }}
+            style={{ color: "#fff", fontSize: hp(2.7) }}
             className={`font-medium tracking-wide text-white `}
           >
             {title}

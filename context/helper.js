@@ -34,7 +34,7 @@ export const defaultTheme = {
     },
     pageHeader: {
         backgroundColor: '#315677',
-        textColor: '#fff',  
+        textColor: '#000',  
     },
     pageTitle: {
         backgroundColor: '#fff',
@@ -46,7 +46,6 @@ export const defaultTheme = {
     },
     // ScreenCA, ScreenExam, ScreenResit, ScreenResult
     pageMarks: {    
-    
         header: {},
         item: {},
         backgroundColor: '#0c5d61',
@@ -95,7 +94,7 @@ export const darkTheme = {
         inActive: '#c489bc',
     },
     pageHeader: {
-        backgroundColor: '#fff  ',
+        backgroundColor: '#315677',
         textColor: '#fff',  
     },
     pageTitle: {

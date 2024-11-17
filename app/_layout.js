@@ -7,6 +7,8 @@ import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import isTokenExpired from '@/utils/actions';
 import { jwtDecode } from 'jwt-decode';
+import { View } from 'react-native';
+import { Text } from 'react-native';
 
 
 const MainLayout = () => {

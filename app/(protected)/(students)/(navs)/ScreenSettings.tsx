@@ -1,6 +1,6 @@
 import Loader from '@/components/Loader';
-import LogoutModal from '@/components/LogoutModal';
-import PaymentModal from '@/components/PaymentModal';
+import ModalLogout from '@/components/ModalLogout';
+import ModalPayment from '@/components/ModalPayment';
 import { useAuth } from '@/context/authContext';
 import defaultTheme from '@/context/helper';
 import darkTheme from '@/context/helper';
@@ -26,10 +26,6 @@ const ScreenSettings = () => {
     darkMode: "default",
     pushNotifications: false,
   });
-
-  console.log(profile)
-
-
   useEffect(() => {
     if (count == 0) {
       const call = async () => {
@@ -58,17 +54,14 @@ const ScreenSettings = () => {
   }
 
   const activateAccount = () => {
-    console.log("clicked")
     setModalVisiblePayment(!modalVisiblePayment)
   }
-
-  console.log(user, profile, 67)
 
   return (
     <>
       {theme ?
         <SafeAreaView style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
-          <View style={styles.header} className='mt-16'>
+          <View style={styles.header} className='mt-6'>
             <View style={styles.headerAction}>
               <TouchableOpacity
                 className='bg-white p-[3px] rounded-full'
@@ -82,7 +75,7 @@ const ScreenSettings = () => {
               </TouchableOpacity>
             </View>
 
-            <Text numberOfLines={1} style={[styles.headerTitle, theme.dark ? { color: theme.pageHeader.backgroundColor } : { color: theme.pageHeader.backgroundColor }]}>
+            <Text numberOfLines={1} style={[styles.headerTitle, { color: theme.pageHeader.textColor }]}>
               Settings
             </Text>
 
@@ -131,26 +124,36 @@ const ScreenSettings = () => {
               </View>
             </View>
 
+
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Status</Text>
+
+              <View style={styles.rowSpacer} />
+              
+              <View style={[styles.rowWrapper, {borderRadius: 12}]}>
+                <View style={styles.row}>
+                  <Text style={styles.rowLabel}>Account Status</Text>
+
+                  <View style={styles.rowSpacer} />
+
+                  <Switch
+                    trackColor={{ false: '#f7303f', true: '#209493' }}
+                    thumbColor={form.account_status ? '#1ebab6' : '#f4f3f4'}
+                    onValueChange={() => { activateAccount(); }
+                    }
+                    style={{ transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }] }}
+                    value={form.account_status} />
+                </View>
+              </View>
+
+            </View>
+
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Preferences</Text>
 
               <View style={styles.sectionBody}>
 
-              <View style={styles.rowWrapper}>
-                  <View style={styles.row}>
-                    <Text style={styles.rowLabel}>Account Status</Text>
 
-                    <View style={styles.rowSpacer} />
-
-                    <Switch
-                      trackColor={{false: '#f7303f', true: '#209493'}}
-                      thumbColor={form.account_status ? '#1ebab6' : '#f4f3f4'}
-                      onValueChange={() => { activateAccount(); }
-                      }
-                      style={{ transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }] }}
-                      value={form.account_status} />
-                  </View>
-                </View>
 
                 <View style={[styles.rowWrapper, styles.rowFirst]}>
                   <TouchableOpacity
@@ -163,25 +166,6 @@ const ScreenSettings = () => {
                     <View style={styles.rowSpacer} />
 
                     <Text style={styles.rowValue}>English</Text>
-
-                    <FeatherIcon
-                      color="#bcbcbc"
-                      name="chevron-right"
-                      size={19} />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.rowWrapper}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      // handle onPress
-                    }}
-                    style={styles.row}>
-                    <Text style={styles.rowLabel}>Location</Text>
-
-                    <View style={styles.rowSpacer} />
-
-                    <Text style={styles.rowValue}>Los Angeles, CA</Text>
 
                     <FeatherIcon
                       color="#bcbcbc"
@@ -242,7 +226,7 @@ const ScreenSettings = () => {
                   </TouchableOpacity>
                 </View>
 
-               
+
 
                 <View style={styles.rowWrapper}>
                   <TouchableOpacity
@@ -280,11 +264,11 @@ const ScreenSettings = () => {
               </View>
             </View>
 
-            <LogoutModal
+            <ModalLogout
               modalVisible={modalVisibleLogout}
               setModalVisible={setModalVisibleLogout}
             />
-            <PaymentModal
+            <ModalPayment
               modalVisible={modalVisiblePayment}
               setModalVisible={setModalVisiblePayment}
               link=""
@@ -334,7 +318,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   contentFooter: {
-    marginTop: 24,
+    marginTop: hp(1),
     fontSize: 13,
     fontWeight: '500',
     textAlign: 'center',

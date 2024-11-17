@@ -16,9 +16,9 @@ const TabsListMenu: TablistProps[] = [
   { id: 3, name: "ca", title: "Resit", link: "ScreenResit", icon: icons.picture },
   { id: 4, name: "ca", title: "Result", link: "ScreenResult", icon: icons.result },
   { id: 5, name: "ca", title: "Fees", link: "ScreenFees", icon: icons.calendar2 },
-  { id: 6, name: "ca", title: "Transcript", link: "ScreenFees", icon: icons.calendar },
+  { id: 6, name: "ca", title: "Transcript", link: "ScreenTranscript", icon: icons.calendar },
   { id: 7, name: "ca", title: "Notice", link: "ScreenAnnouncement", icon: icons.calendar2 },
-  { id: 8, name: "ca", title: "Time", link: "ScreenSettings", icon: icons.calendar },
+  { id: 8, name: "ca", title: "Time", link: "ScreenTimeTable", icon: icons.calendar },
   { id: 9, name: "ca", title: "Settings", link: "ScreenSettings", icon: icons.settings },
 ]
 
@@ -35,16 +35,16 @@ const TabsMenu = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme?.backgroundColor }}>
 
-      <View style={{ elevation: 10, shadowColor: '#52006A', paddingTop: hp(3), paddingBottom: hp(2), paddingHorizontal: hp(3), borderBottomLeftRadius: hp(8), borderBottomRightRadius: hp(8), }} className='bg-[#dbf5eb] flex flex-row gap-4 items-center justify-between rounded-xl text-center'>
-      <TouchableOpacity onPress={() => { handlePress("/SelectClass") }} className='w-[20%]'>
+      <View style={{ elevation: 10, shadowColor: '#52006A', paddingTop: hp(2), paddingBottom: hp(2), paddingHorizontal: hp(3), borderBottomLeftRadius: hp(8), borderBottomRightRadius: hp(8), }} className='bg-[#8de2c2] flex flex-row gap-4 items-center justify-between rounded-xl text-center'>
+        <TouchableOpacity onPress={() => { handlePress("/SelectClass") }} className='w-[20%]'>
 
-        <View   >
-          <Image
-            alt=""
-            style={styles.alertAvatar}
-            source={icons.icon}
-          />
-        </View>
+          <View   >
+            <Image
+              alt=""
+              style={styles.alertAvatar}
+              source={icons.icon}
+            />
+          </View>
         </TouchableOpacity>
 
         <View className='flex items-center justify-center w-[80%]'>
@@ -52,7 +52,7 @@ const TabsMenu = () => {
             {user.username}
           </Text>
           <Text style={{ fontSize: hp(2.5), }} className='flex font-medium italic items-center justify-center text-center tracking-widest'>
-          {profile.specialty}
+            {profile.specialty}
             {'\n'}
             {profile.year} {' - '} {profile.level}
           </Text>
@@ -65,7 +65,7 @@ const TabsMenu = () => {
       <View style={styles.container}>
         <View style={styles.alert}>
 
-          <View style={{ flexGrow: 1 }} className='flex-row flex-w flex-wrap gap-6 items-center justify-between mx-[10px] my-16'>
+          <View style={{ flexGrow: 1 }} className='flex-row flex-w flex-wrap gap-6 items-center justify-between mx-[10px] my-2'>
 
             {
               TabsListMenu.map((item: TablistProps) => (
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
-    paddingTop: hp(8),
+    paddingTop: hp(2),
   },
   alertContent: {
     flexGrow: 1,

@@ -4,12 +4,12 @@ import { useAuth } from '@/context/authContext'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { getData } from '@/utils/functions'
 import { protocol } from '@/utils/config'
-import { GetSchoolFeesUrl, GetUserProfileUrl } from '@/utils/apiLinks'
+import { GetSchoolFeesUrl } from '@/utils/apiLinks'
 import { useRouter } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { jwtDecode } from 'jwt-decode'
 import { StyleSheet } from 'react-native'
-import { GetSchoolFeesInter } from '@/utils/inter'
+import { GetSchoolFeesInter, SessionInter } from '@/utils/inter'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 
@@ -24,7 +24,7 @@ const SelectClass = () => {
       const call = async () => {
         const access = await AsyncStorage.getItem("access");
         if (access) {
-          const token = await jwtDecode(access)
+          const token: SessionInter = await jwtDecode(access)
           const fees = await getData(protocol + "api" + domain + GetSchoolFeesUrl, {
             nopage: true, userprofile__user__id: token.user_id, fieldList: [
               "id", 
@@ -32,7 +32,7 @@ const SelectClass = () => {
               "userprofile__specialty__school__campus__id", "userprofile__specialty__main_specialty__specialty_name", 
               "userprofile__specialty__level__level", "userprofile__specialty__academic_year", "userprofile__specialty__id",
               "balance", "userprofile__specialty__tuition", "platform_paid", "userprofile__specialty__school__campus__id", 
-              "userprofile__specialty__school__campus__name"
+              "userprofile__specialty__school__campus__name", "platform_charges"
             ]
           })
           if (fees && fees.length > 0) {
@@ -45,9 +45,11 @@ const SelectClass = () => {
     }
   }, [isAuthenticated, theme])
 
+
   const handlePress = async (data: GetSchoolFeesInter) => {
     const List: string[] = ["higher", "secondary"]
     const sch_type = List.filter((item: string) => item.startsWith(data.userprofile__specialty__school__school_type.slice(-1).toLowerCase()))[0]
+
     if (sch_type) {
       await AsyncStorage.setItem("school", sch_type)
       setProfile({
@@ -59,6 +61,7 @@ const SelectClass = () => {
         year: data.userprofile__specialty__academic_year,
         campus_id: data.userprofile__specialty__school__campus__id,
         campus_name: data.userprofile__specialty__school__campus__name,
+        platform_charges: data.platform_charges,
         platform: data.platform_paid,
         paid: data.userprofile__specialty__tuition - data.balance,
         balance: data.balance,

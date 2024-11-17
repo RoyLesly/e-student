@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '@/context/authContext'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
@@ -36,11 +36,10 @@ const SelectCampus = () => {
   }, [user])
 
   const handlePress = (data: GetSchoolInfoInter) => {
-    console.log(data, 44)
     AsyncStorage.setItem("school", JSON.stringify(data.id))
     router.push(`/(protected)/MyProfileLecturer`)
   }
-  
+
   return (
     <View className=''>
 
@@ -57,12 +56,12 @@ const SelectCampus = () => {
       </View>
         :
         <FlatList
-        data={apiSchools.sort((a: GetSchoolInfoInter, b: GetSchoolInfoInter) => a.campus__name > b.campus__name ? 1 : a.campus__name < b.campus__name ? -1 : 0)}
-        renderItem={({ item }) => <Item data={item} onPress={handlePress} />}
-        keyExtractor={item => item.id.toString()}
-        className="border flex w-full"
-      />
-        }
+          data={apiSchools.sort((a: GetSchoolInfoInter, b: GetSchoolInfoInter) => a.campus__name > b.campus__name ? 1 : a.campus__name < b.campus__name ? -1 : 0)}
+          renderItem={({ item }) => <Item data={item} onPress={handlePress} />}
+          keyExtractor={item => item.id.toString()}
+          className="border flex w-full"
+        />
+      }
 
     </View>
   )
@@ -72,14 +71,14 @@ export default SelectCampus
 
 
 const Item = ({ data, onPress }: { data: GetSchoolInfoInter, onPress: any }) => (
-<View style={{ marginVertical: hp(2) }} className="rounded">
-  <TouchableOpacity onPress={() => onPress(data)} className="flex flex-col items-center justify-center">
-    <Text style={{ fontSize: hp(3.5) }} className="font-bold italic text-4xl">{data.campus__name}</Text>
-    <View className="flex flex-row gap-10 justify-center w-full">
-      <Text style={{ fontSize: hp(2.5) }} className="font-semibold italic text-secondary text-xl">{data.campus__region}</Text>
-      <Text style={{ fontSize: hp(2.5) }} className="font-semibold italic text-secondary text-xl">{data.school_type}</Text>
-    </View>
-  </TouchableOpacity>
+  <View style={{ marginVertical: hp(2) }} className="rounded">
+    <TouchableOpacity onPress={() => onPress(data)} className="flex flex-col items-center justify-center">
+      <Text style={{ fontSize: hp(3.5) }} className="font-bold italic text-4xl">{data.campus__name}</Text>
+      <View className="flex flex-row gap-10 justify-center w-full">
+        <Text style={{ fontSize: hp(2.5) }} className="font-semibold italic text-secondary text-xl">{data.campus__region}</Text>
+        <Text style={{ fontSize: hp(2.5) }} className="font-semibold italic text-secondary text-xl">{data.school_type}</Text>
+      </View>
+    </TouchableOpacity>
 
-</View>
+  </View>
 );

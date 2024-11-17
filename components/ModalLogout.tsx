@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import {Alert, Modal, StyleSheet, Text, View} from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const LogoutModal = ({ modalVisible, setModalVisible }: { modalVisible: boolean, setModalVisible: any }) => {
+const ModalLogout = ({ modalVisible, setModalVisible }: { modalVisible: boolean, setModalVisible: any }) => {
     const { setUser } = useAuth();
     const router = useRouter();
 
@@ -84,7 +84,7 @@ const LogoutModal = ({ modalVisible, setModalVisible }: { modalVisible: boolean,
   );
 };
 
-export default LogoutModal;
+export default ModalLogout;
 
 const styles = StyleSheet.create({
   centeredView: {

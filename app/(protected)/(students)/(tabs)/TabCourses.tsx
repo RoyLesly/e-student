@@ -15,7 +15,7 @@ import { GetResultInter, GetSchoolFeesInter, GetUserProfileInter } from '@/utils
 import Loader from '@/components/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FeesCheck from '@/components/CompStudents/FeesCheck';
-import { GetCourseInter } from '@/inter';
+import { GetCourseInter } from '@/utils/inter';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import PageTitle from '@/components/CompStudents/PageTitle';
 

@@ -1,28 +1,40 @@
-import { ProfileProps, useAuth } from '@/context/authContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '@/context/authContext';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, TextInput } from 'react-native';
+import { Modal, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, TextInput } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FeatherIcon from '@expo/vector-icons/Feather';
+import PickerSelect from 'react-native-picker-select';
+// import { makePayment } from '@/utils/functions';
 
-const PaymentModal = ({ modalVisible, setModalVisible, link }: { modalVisible: boolean, setModalVisible: any, link: string }) => {
+
+const ModalPayment = ({ modalVisible, setModalVisible, link }: { modalVisible: boolean, setModalVisible: any, link: string }) => {
   const { setUser, profile } = useAuth();
+  const [ loading, setLoading ] = useState(false);
   const router = useRouter();
   const [form, setForm] = useState({
+    service: '',
     telephone: '',
-    amount: '',
+    amount: profile.platform_charges,
   });
 
-  const LogoutAction = () => {
-    setUser({});
-    AsyncStorage.setItem("access", "");
-    AsyncStorage.setItem("refresh", "");
-    setModalVisible(!modalVisible)
-    router.replace("/Login")
-  }
+  const ActionPay = () => {
+    setLoading(true);
+    console.log(form, 24)
 
+
+    if (form.service != "" && form.telephone != "" && form.amount > 0){
+      const call = async () => {
+        // const response = await makePayment({ ...form, telephone: form.telephone});
+        // console.log(response, 29)
+
+      }
+    }
+
+    // router.replace("/Login")
+  }
+  
   return (
     <>
       <Modal
@@ -39,38 +51,65 @@ const PaymentModal = ({ modalVisible, setModalVisible, link }: { modalVisible: b
             <View style={styles.header}>
               <View style={styles.headerBack}>
                 <FeatherIcon
-                onPress={() => setModalVisible(false)}
+                  onPress={() => setModalVisible(false)}
                   color="#1D2A32"
                   name="chevron-left"
-                  size={30} 
-                  />
+                  size={30}
+                />
               </View>
-              <Text style={styles.title}>Account Activation</Text>
-              <Text style={styles.subtitle}>
+              <Text style={[styles.title, { marginVertical: hp(2) }]} className='w-full'>Account Activation</Text>
+              <Text style={[styles.subtitle, { marginVertical: hp(2) }]} className='w-full'>
                 Fill in the fields below to make payment.
               </Text>
             </View>
+
+
             <View style={styles.form}>
+
+
+              <Text style={styles.inputLabel}>Select Operator</Text>
+              <View style={[styles.input, { borderRadius: hp(2), backgroundColor: "white" }]} className=''>
+                <PickerSelect
+                  onValueChange={(value) => setForm({ ...form, service: value })}
+                  items={[
+                    { label: 'MTN', value: 'MTN' },
+                    { label: 'ORANGE', value: 'ORANGE' },
+                  ]}
+                />
+              </View>
+
               <View style={styles.input}>
-                <Text style={styles.inputLabel}>Telephone Number</Text>
+                {/* <Text style={styles.inputLabel}>Telephone Number</Text> */}
                 <TextInput
                   clearButtonMode="while-editing"
                   onChangeText={telephone => setForm({ ...form, telephone })}
                   placeholder="Enter Telephone Number"
                   placeholderTextColor="#6b7280"
                   style={styles.inputControl}
-                  value={form.telephone} />
+                  value={form.telephone}
+                />
               </View>
-             
-          
-           
+
+              <View style={styles.input}>
+                {/* <Text style={styles.inputLabel}>Telephone Number</Text> */}
+                <TextInput
+                  clearButtonMode="while-editing"
+                  onChangeText={amount => setForm({ ...form, amount })}
+                  placeholder={profile.platform_charges.toString()}
+                  placeholderTextColor="#6b7280"
+                  style={styles.inputControl}
+                  value={profile.platform_charges}
+                  readOnly
+                />
+              </View>
+
+
+
               <View style={styles.formAction}>
                 <TouchableOpacity
-                  onPress={() => {
-                    console.log(form)
-                  }}>
+                  onPress={() => ActionPay()}>
                   <View style={styles.btn}>
-                    <Text style={styles.btnText}>Get Started</Text>
+                    <Text style={styles.btnText}>Activate</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -104,7 +143,7 @@ const PaymentModal = ({ modalVisible, setModalVisible, link }: { modalVisible: b
   );
 };
 
-export default PaymentModal;
+export default ModalPayment;
 
 
 const styles = StyleSheet.create({
@@ -115,12 +154,14 @@ const styles = StyleSheet.create({
     flexBasis: 0,
   },
   title: {
+    textAlign: "center",
     fontSize: 31,
     fontWeight: '700',
     color: '#1D2A32',
     marginBottom: 6,
   },
   subtitle: {
+    textAlign: "center",
     fontSize: 15,
     fontWeight: '500',
     color: '#929292',
@@ -148,7 +189,7 @@ const styles = StyleSheet.create({
     flexBasis: 0,
   },
   formAction: {
-    marginTop: 4,
+    marginTop: hp(4),
     marginBottom: 16,
   },
   formFooter: {
@@ -161,7 +202,7 @@ const styles = StyleSheet.create({
   },
   /** Input */
   input: {
-    marginBottom: 16,
+    marginBottom: hp(4),
   },
   inputLabel: {
     fontSize: 17,
@@ -173,7 +214,7 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: '#fff',
     paddingHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: hp(2.2),
     fontSize: 15,
     fontWeight: '500',
     color: '#222',
@@ -186,7 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 30,
+    borderRadius: hp(3),
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderWidth: 1,

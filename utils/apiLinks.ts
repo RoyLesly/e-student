@@ -58,3 +58,17 @@ export const GetTransactionUrl = RootApi + "/higher/higher_fees_control/get-tran
 export const GetPaymentMethodUrl = RootApi + "/higher/higher_fees_control/get-paymentmethod"
 export const GetAccountUrl = RootApi + "/higher/higher_fees_control/get-account"
 export const GetTranscriptApplicationUrl = RootApi + "/higher/higher_fees_control/get-transcript-application"
+
+export const NotificationUrl = RootApi + "/higher/higher_noti_control/notification"
+export const ComplainUrl = RootApi + "/higher/higher_noti_control/complain"
+
+export const GetNotificationUrl = RootApi + "/higher/higher_noti_control/get-notification"
+export const GetComplainUrl = RootApi + "/higher/higher_noti_control/get-complain"
+
+
+export const TimeTableWeekUrl = RootApi + "/higher/higher_time_control/timetableweek"
+export const TimeTableDayUrl = RootApi + "/higher/higher_time_control/timetableday"
+export const TimeSlotUrl = RootApi + "/higher/higher_time_control/timeslot"
+export const GetTimeTableWeekUrl = RootApi + "/higher/higher_time_control/get-timetableweek"
+export const GetTimeTableDayUrl = RootApi + "/higher/higher_time_control/get-timetableday"
+export const GetTimeSlotUrl = RootApi + "/higher/higher_time_control/get-timeslot"

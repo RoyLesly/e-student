@@ -23,6 +23,7 @@ export interface ProfileProps {
     year: string
     campus_id: number
     campus_name: string
+    platform_charges: number
     platform: boolean
     balance: number
     paid: number
@@ -45,7 +46,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         const checkTheme = async () => {
             const themeMode = await AsyncStorage.getItem("themeMode")
             if (themeMode) {
-                themeMode !== 'defaultMode' ? setTheme(darkTheme) : setTheme(defaultTheme)
+                themeMode === 'defaultMode' ? setTheme(defaultTheme) : setTheme(darkTheme)
             } else { 
                 await AsyncStorage.setItem("themeMode", "darkMode")
                 setTheme(darkTheme) 
